@@ -1,9 +1,8 @@
 import React from 'react';
 import { useEffect, useMemo, useState } from 'react';
-import appStoreBadge from './assets/appstore.png';
+import appStoreAndGooglePlay from './assets/appstoreandgoogleplay.png';
 import FadeContent from './FadeContent.jsx';
 import heroImage from './assets/belize-coast-hero.png';
-import googlePlayBadge from './assets/googleplay.png';
 import mobileLoginScreen from './assets/mobileloginscreen.jpeg';
 
 const navItems = ['Personal', 'Business', 'Loans', 'Cards', 'About Us', 'Help & Support'];
@@ -210,19 +209,25 @@ function AppPromo() {
     <aside className="app-promo" aria-label="Atlantic Bank mobile app">
       <div className="app-promo-copy">
         <h2>Bank Anytime, Anywhere</h2>
-        <p>Download the Atlantic Bank Belize App.</p>
+        <p>Download the Atlantic Bank App.</p>
         <div className="store-buttons" aria-label="App download links">
-          <a href="#" aria-label="Download Atlantic Bank on the App Store">
-            <img src={appStoreBadge} alt="Download on the App Store" />
-          </a>
-          <a href="#" aria-label="Get Atlantic Bank on Google Play">
-            <img src={googlePlayBadge} alt="Get it on Google Play" />
+          <a href="#" aria-label="Download the Atlantic Bank app on the App Store or Google Play">
+            <img
+              src={appStoreAndGooglePlay}
+              alt="Download on the App Store and Get it on Google Play"
+            />
           </a>
         </div>
       </div>
 
       <div className="phone-preview" aria-label="Mobile app preview">
-        <img src={mobileLoginScreen} alt="Atlantic Bank mobile app login screen" />
+        <img
+          src={mobileLoginScreen}
+          alt="Atlantic Bank mobile app login screen"
+          width={818}
+          height={1600}
+          decoding="async"
+        />
       </div>
     </aside>
   );
