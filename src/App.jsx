@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMemo, useState } from 'react';
 import heroImage from './assets/belize-coast-hero.png';
 
 const navItems = ['Personal', 'Business', 'Loans', 'Cards', 'About Us', 'Help & Support'];
@@ -153,6 +154,12 @@ function Logo() {
 }
 
 function App() {
+  const [loanAmount, setLoanAmount] = useState(10000);
+  const formattedLoanAmount = useMemo(
+    () => `BZD ${loanAmount.toLocaleString('en-US')}`,
+    [loanAmount]
+  );
+
   return (
     <div className="site-shell">
       <header className="topbar">
@@ -256,10 +263,19 @@ function App() {
 
               <label>
                 <span>How much would you like to borrow?</span>
-                <input defaultValue="BZD 10,000" type="text" />
+                <input value={formattedLoanAmount} type="text" readOnly />
               </label>
 
-              <input className="range" type="range" min="1000" max="100000" defaultValue="50000" aria-label="Loan amount" />
+              <input
+                className="range"
+                type="range"
+                min="1000"
+                max="100000"
+                step="500"
+                value={loanAmount}
+                onChange={(event) => setLoanAmount(Number(event.target.value))}
+                aria-label="Loan amount"
+              />
               <div className="range-labels">
                 <span>BZD 1,000</span>
                 <span>BZD 100,000</span>
