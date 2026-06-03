@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import appStoreBadge from './assets/appstore.png';
 import FadeContent from './FadeContent.jsx';
 import heroImage from './assets/belize-coast-hero.png';
@@ -159,14 +159,15 @@ function Logo() {
 
 function App() {
   const [currentStep, setCurrentStep] = useState('start');
+  const [progress, setProgress] = useState(13);
   const [loanType, setLoanType] = useState('Personal Loan');
   const [monthlyIncome, setMonthlyIncome] = useState('BZD 2,000');
   const [loanAmount, setLoanAmount] = useState(10000);
   const [loanAmountText, setLoanAmountText] = useState('BZD 10,000');
   const [eligibilityForm, setEligibilityForm] = useState({
-    fullName: 'Juan Perez',
+    fullName: 'John Doe',
     employmentLength: '3 - 5 years',
-    email: 'juan.perez@email.com',
+    email: 'john.doe@email.com',
     phone: '501-123-4567'
   });
   const formattedLoanAmount = useMemo(
@@ -174,6 +175,27 @@ function App() {
     [loanAmount]
   );
   const isEligibilityStep = currentStep === 'eligibility';
+  const isLoadingStep = currentStep === 'loading';
+
+  useEffect(() => {
+    if (!isLoadingStep) return undefined;
+
+    setProgress(13);
+    const midTimer = setTimeout(() => setProgress(66), 150);
+    const doneTimer = setTimeout(() => setProgress(100), 650);
+    const nextTimer = setTimeout(() => {
+      setCurrentStep('eligibility');
+      requestAnimationFrame(() => {
+        document.getElementById('eligibility-card-title')?.focus();
+      });
+    }, 950);
+
+    return () => {
+      clearTimeout(midTimer);
+      clearTimeout(doneTimer);
+      clearTimeout(nextTimer);
+    };
+  }, [isLoadingStep]);
 
   function updateLoanAmount(value) {
     const nextAmount = Number(value);
@@ -188,12 +210,11 @@ function App() {
     }));
   }
 
-  function handleContinue(event) {
+  function handleFormSubmit(event) {
     event.preventDefault();
-    setCurrentStep('eligibility');
-    requestAnimationFrame(() => {
-      document.getElementById('eligibility-card-title')?.focus();
-    });
+    if (currentStep === 'start') {
+      setCurrentStep('loading');
+    }
   }
 
   return (
@@ -230,28 +251,14 @@ function App() {
 
       <main>
         <section
-          className={`hero ${isEligibilityStep ? 'hero-eligibility' : ''}`}
+          className="hero"
           style={{ '--hero-image': `url(${heroImage})` }}
           aria-label="Atlantic Bank loan application"
         >
           <div className="hero-content">
             <div className="hero-copy">
-              {isEligibilityStep && (
-                <span className="hero-pill">
-                  <Icon name="shield" size={16} />
-                  Secure. Fast. Built for Belize.
-                </span>
-              )}
-              <h1>
-                {isEligibilityStep
-                  ? 'Apply for Financing with Confidence'
-                  : 'Bank with Confidence. Build Your Future.'}
-              </h1>
-              <p>
-                {isEligibilityStep
-                  ? 'Our secure online application makes it easy to get the financing you need anytime, anywhere in Belize.'
-                  : 'Secure financial solutions for you, your family and your business.'}
-              </p>
+              <h1>Bank with Confidence. Build Your Future.</h1>
+              <p>Secure financial solutions for you, your family and your business.</p>
 
               <div className="benefit-row">
                 {benefits.map(({ icon, title, copy }) => (
@@ -282,23 +289,54 @@ function App() {
             <form
               className="loan-card"
               aria-label={isEligibilityStep ? 'Detailed eligibility form' : 'Loan application starter form'}
-              onSubmit={handleContinue}
+              onSubmit={handleFormSubmit}
             >
               <FadeContent key={currentStep} blur duration={650} threshold={0} className="loan-card-fade">
                 <div className="loan-heading">
                   <div>
-                    <h2 id={isEligibilityStep ? 'eligibility-card-title' : undefined} tabIndex={isEligibilityStep ? -1 : undefined}>
-                      {isEligibilityStep ? 'Check Your Eligibility' : 'Apply for a Loan Online'}
+                    <h2
+                      id={isEligibilityStep ? 'eligibility-card-title' : undefined}
+                      tabIndex={isEligibilityStep ? -1 : undefined}
+                    >
+                      {isEligibilityStep
+                        ? 'Check Your Eligibility'
+                        : isLoadingStep
+                          ? 'Checking Your Details'
+                          : 'Apply for a Loan Online'}
                     </h2>
-                    <p>{isEligibilityStep ? 'Complete the short form below to see if you may qualify.' : 'Quick. Easy. Secure.'}</p>
+                    <p>
+                      {isEligibilityStep
+                        ? 'Complete the short form below to see if you may qualify.'
+                        : isLoadingStep
+                          ? 'Preparing your secure eligibility form.'
+                          : 'Quick. Easy. Secure.'}
+                    </p>
                   </div>
-                  <span className={isEligibilityStep ? 'secure-badge encrypted-badge' : 'secure-badge'}>
+                  <span className={isEligibilityStep || isLoadingStep ? 'secure-badge encrypted-badge' : 'secure-badge'}>
                     <Icon name="shield" size={22} />
-                    {isEligibilityStep ? 'Secure & Encrypted' : 'Secure Application'}
+                    {isEligibilityStep || isLoadingStep ? 'Secure & Encrypted' : 'Secure Application'}
                   </span>
                 </div>
 
-                {isEligibilityStep ? (
+                {isLoadingStep ? (
+                  <div className="eligibility-loading" role="status" aria-live="polite">
+                    <span className="loading-icon">
+                      <Icon name="shield" size={30} />
+                    </span>
+                    <strong>Reviewing your loan details</strong>
+                    <p>Loan type, income, and requested amount are being carried into the next step.</p>
+                    <div
+                      className="progress-track"
+                      role="progressbar"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-valuenow={progress}
+                      aria-label="Eligibility form loading progress"
+                    >
+                      <span style={{ width: `${progress}%` }} />
+                    </div>
+                  </div>
+                ) : isEligibilityStep ? (
                   <div className="eligibility-grid">
                     <label htmlFor="fullName">
                       <span>Full Name</span>
@@ -438,12 +476,14 @@ function App() {
                   </>
                 )}
 
-                <button className="primary-button full" type="submit">
+                <button className="primary-button full" type="submit" disabled={isLoadingStep}>
                   {isEligibilityStep ? (
                     <>
                       Continue
                       <Icon name="arrow" size={18} />
                     </>
+                  ) : isLoadingStep ? (
+                    'Loading...'
                   ) : (
                     <>
                       <Icon name="lock" size={18} />

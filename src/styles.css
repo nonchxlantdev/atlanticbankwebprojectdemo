@@ -235,6 +235,11 @@ a {
   background: #ba2727;
 }
 
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .primary-button.compact {
   min-height: 44px;
   padding: 0 18px;
@@ -264,10 +269,6 @@ a {
     var(--hero-image) center / cover no-repeat;
 }
 
-.hero-eligibility {
-  min-height: 575px;
-}
-
 .hero::after {
   content: "";
   position: absolute;
@@ -281,7 +282,7 @@ a {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 540px);
   gap: clamp(32px, 5vw, 72px);
   width: min(1140px, calc(100% - 48px));
   margin: 0 auto;
@@ -291,20 +292,6 @@ a {
 .hero-copy {
   max-width: 610px;
   padding-top: 16px;
-}
-
-.hero-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 34px;
-  margin-bottom: 18px;
-  padding: 0 16px;
-  border-radius: 999px;
-  color: var(--blue-deep);
-  background: rgba(255, 255, 255, 0.76);
-  font-size: 0.88rem;
-  font-weight: 850;
 }
 
 .hero h1 {
@@ -379,6 +366,8 @@ a {
 
 .loan-card {
   align-self: start;
+  width: 100%;
+  min-height: 432px;
   padding: 24px;
   border-radius: 8px;
   color: var(--ink);
@@ -387,12 +376,10 @@ a {
   box-shadow: var(--shadow);
 }
 
-.eligibility-card {
-  width: min(100%, 620px);
-}
-
 .loan-card-fade {
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 384px;
 }
 
 .loan-heading {
@@ -490,6 +477,56 @@ a {
 
 .eligibility-wide {
   grid-column: 1 / -1;
+}
+
+.eligibility-loading {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+  min-height: 245px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.eligibility-loading strong {
+  color: var(--navy);
+  font-size: 1.05rem;
+}
+
+.eligibility-loading p {
+  max-width: 360px;
+  margin: 0;
+  color: #33405e;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.loading-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  color: var(--blue);
+  background: #eaf1ff;
+}
+
+.progress-track {
+  overflow: hidden;
+  width: min(100%, 360px);
+  height: 10px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: #dce6f6;
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), var(--red));
+  transition: width 520ms ease;
 }
 
 .range {
