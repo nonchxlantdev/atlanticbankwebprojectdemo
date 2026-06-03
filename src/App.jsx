@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMemo, useState } from 'react';
 import appStoreBadge from './assets/appstore.png';
+import FadeContent from './FadeContent.jsx';
 import heroImage from './assets/belize-coast-hero.png';
 import googlePlayBadge from './assets/googleplay.png';
 import mobileLoginScreen from './assets/mobileloginscreen.jpeg';
@@ -166,9 +167,7 @@ function App() {
     fullName: 'Juan Perez',
     employmentLength: '3 - 5 years',
     email: 'juan.perez@email.com',
-    phone: '501-123-4567',
-    loanPurpose: 'Home Improvements',
-    branch: 'Belize City Branch'
+    phone: '501-123-4567'
   });
   const formattedLoanAmount = useMemo(
     () => `BZD ${loanAmount.toLocaleString('en-US')}`,
@@ -281,210 +280,182 @@ function App() {
             </div>
 
             <form
-              className={`loan-card ${isEligibilityStep ? 'eligibility-card' : ''}`}
+              className="loan-card"
               aria-label={isEligibilityStep ? 'Detailed eligibility form' : 'Loan application starter form'}
               onSubmit={handleContinue}
             >
-              <div className="loan-heading">
-                <div>
-                  <h2 id={isEligibilityStep ? 'eligibility-card-title' : undefined} tabIndex={isEligibilityStep ? -1 : undefined}>
-                    {isEligibilityStep ? 'Check Your Eligibility' : 'Apply for a Loan Online'}
-                  </h2>
-                  <p>{isEligibilityStep ? 'Complete the short form below to see if you may qualify.' : 'Quick. Easy. Secure.'}</p>
-                </div>
-                <span className={isEligibilityStep ? 'secure-badge encrypted-badge' : 'secure-badge'}>
-                  <Icon name="shield" size={22} />
-                  {isEligibilityStep ? 'Secure & Encrypted' : 'Secure Application'}
-                </span>
-              </div>
-
-              {isEligibilityStep ? (
-                <div className="eligibility-grid">
-                  <label htmlFor="fullName">
-                    <span>Full Name</span>
-                    <input
-                      id="fullName"
-                      value={eligibilityForm.fullName}
-                      onChange={(event) => handleEligibilityChange('fullName', event.target.value)}
-                      type="text"
-                      autoComplete="name"
-                    />
-                  </label>
-
-                  <label htmlFor="eligibilityIncome">
-                    <span>Monthly Income</span>
-                    <select
-                      id="eligibilityIncome"
-                      value={monthlyIncome}
-                      onChange={(event) => setMonthlyIncome(event.target.value)}
-                    >
-                      <option>BZD 2,000</option>
-                      <option>BZD 3,500</option>
-                      <option>BZD 5,000</option>
-                      <option>BZD 8,000+</option>
-                    </select>
-                  </label>
-
-                  <label htmlFor="employmentLength">
-                    <span>Length of Employment</span>
-                    <select
-                      id="employmentLength"
-                      value={eligibilityForm.employmentLength}
-                      onChange={(event) => handleEligibilityChange('employmentLength', event.target.value)}
-                    >
-                      <option>Less than 1 year</option>
-                      <option>1 - 2 years</option>
-                      <option>3 - 5 years</option>
-                      <option>5+ years</option>
-                    </select>
-                  </label>
-
-                  <label htmlFor="email">
-                    <span>Email Address</span>
-                    <input
-                      id="email"
-                      value={eligibilityForm.email}
-                      onChange={(event) => handleEligibilityChange('email', event.target.value)}
-                      type="email"
-                      autoComplete="email"
-                    />
-                  </label>
-
-                  <label htmlFor="phone">
-                    <span>Phone Number</span>
-                    <input
-                      id="phone"
-                      value={eligibilityForm.phone}
-                      onChange={(event) => handleEligibilityChange('phone', event.target.value)}
-                      type="tel"
-                      autoComplete="tel"
-                    />
-                  </label>
-
-                  <label htmlFor="eligibilityLoanType">
-                    <span>Loan Type</span>
-                    <select
-                      id="eligibilityLoanType"
-                      value={loanType}
-                      onChange={(event) => setLoanType(event.target.value)}
-                    >
-                      <option>Personal Loan</option>
-                      <option>Mortgage Loan</option>
-                      <option>Vehicle Loan</option>
-                      <option>Business Loan</option>
-                    </select>
-                  </label>
-
-                  <label htmlFor="loanAmountRequested">
-                    <span>Loan Amount Requested</span>
-                    <input
-                      id="loanAmountRequested"
-                      value={loanAmountText}
-                      onChange={(event) => setLoanAmountText(event.target.value)}
-                      type="text"
-                      inputMode="decimal"
-                    />
-                  </label>
-
-                  <label htmlFor="loanPurpose">
-                    <span>Loan Purpose</span>
-                    <select
-                      id="loanPurpose"
-                      value={eligibilityForm.loanPurpose}
-                      onChange={(event) => handleEligibilityChange('loanPurpose', event.target.value)}
-                    >
-                      <option>Home Improvements</option>
-                      <option>Debt Consolidation</option>
-                      <option>Vehicle Purchase</option>
-                      <option>Business Expansion</option>
-                      <option>Personal Expenses</option>
-                    </select>
-                  </label>
-
-                  <label className="eligibility-wide" htmlFor="branch">
-                    <span>Preferred Branch (optional)</span>
-                    <select
-                      id="branch"
-                      value={eligibilityForm.branch}
-                      onChange={(event) => handleEligibilityChange('branch', event.target.value)}
-                    >
-                      <option>Belize City Branch</option>
-                      <option>Belmopan Branch</option>
-                      <option>San Pedro Branch</option>
-                      <option>Orange Walk Branch</option>
-                      <option>Dangriga Branch</option>
-                    </select>
-                  </label>
-                </div>
-              ) : (
-                <>
-                  <label htmlFor="starterLoanType">
-                    <span>I want to apply for</span>
-                    <select
-                      id="starterLoanType"
-                      value={loanType}
-                      onChange={(event) => setLoanType(event.target.value)}
-                    >
-                      <option>Personal Loan</option>
-                      <option>Mortgage Loan</option>
-                      <option>Vehicle Loan</option>
-                      <option>Business Loan</option>
-                    </select>
-                  </label>
-
-                  <label htmlFor="starterMonthlyIncome">
-                    <span>My estimated monthly income</span>
-                    <select
-                      id="starterMonthlyIncome"
-                      value={monthlyIncome}
-                      onChange={(event) => setMonthlyIncome(event.target.value)}
-                    >
-                      <option>BZD 2,000</option>
-                      <option>BZD 3,500</option>
-                      <option>BZD 5,000</option>
-                      <option>BZD 8,000+</option>
-                    </select>
-                  </label>
-
-                  <label htmlFor="starterLoanAmount">
-                    <span>How much would you like to borrow?</span>
-                    <input id="starterLoanAmount" value={formattedLoanAmount} type="text" readOnly />
-                  </label>
-
-                  <input
-                    className="range"
-                    type="range"
-                    min="1000"
-                    max="100000"
-                    step="500"
-                    value={loanAmount}
-                    onChange={(event) => updateLoanAmount(event.target.value)}
-                    aria-label="Loan amount"
-                  />
-                  <div className="range-labels">
-                    <span>BZD 1,000</span>
-                    <span>BZD 100,000</span>
+              <FadeContent key={currentStep} blur duration={650} threshold={0} className="loan-card-fade">
+                <div className="loan-heading">
+                  <div>
+                    <h2 id={isEligibilityStep ? 'eligibility-card-title' : undefined} tabIndex={isEligibilityStep ? -1 : undefined}>
+                      {isEligibilityStep ? 'Check Your Eligibility' : 'Apply for a Loan Online'}
+                    </h2>
+                    <p>{isEligibilityStep ? 'Complete the short form below to see if you may qualify.' : 'Quick. Easy. Secure.'}</p>
                   </div>
-                </>
-              )}
+                  <span className={isEligibilityStep ? 'secure-badge encrypted-badge' : 'secure-badge'}>
+                    <Icon name="shield" size={22} />
+                    {isEligibilityStep ? 'Secure & Encrypted' : 'Secure Application'}
+                  </span>
+                </div>
 
-              <button className="primary-button full" type="submit">
                 {isEligibilityStep ? (
-                  <>
-                    <Icon name="lock" size={18} />
-                    Check Eligibility
-                  </>
+                  <div className="eligibility-grid">
+                    <label htmlFor="fullName">
+                      <span>Full Name</span>
+                      <input
+                        id="fullName"
+                        value={eligibilityForm.fullName}
+                        onChange={(event) => handleEligibilityChange('fullName', event.target.value)}
+                        type="text"
+                        autoComplete="name"
+                      />
+                    </label>
+
+                    <label htmlFor="eligibilityIncome">
+                      <span>Monthly Income</span>
+                      <select
+                        id="eligibilityIncome"
+                        value={monthlyIncome}
+                        onChange={(event) => setMonthlyIncome(event.target.value)}
+                      >
+                        <option>BZD 2,000</option>
+                        <option>BZD 3,500</option>
+                        <option>BZD 5,000</option>
+                        <option>BZD 8,000+</option>
+                      </select>
+                    </label>
+
+                    <label htmlFor="employmentLength">
+                      <span>Length of Employment</span>
+                      <select
+                        id="employmentLength"
+                        value={eligibilityForm.employmentLength}
+                        onChange={(event) => handleEligibilityChange('employmentLength', event.target.value)}
+                      >
+                        <option>Less than 1 year</option>
+                        <option>1 - 2 years</option>
+                        <option>3 - 5 years</option>
+                        <option>5+ years</option>
+                      </select>
+                    </label>
+
+                    <label htmlFor="email">
+                      <span>Email Address</span>
+                      <input
+                        id="email"
+                        value={eligibilityForm.email}
+                        onChange={(event) => handleEligibilityChange('email', event.target.value)}
+                        type="email"
+                        autoComplete="email"
+                      />
+                    </label>
+
+                    <label htmlFor="phone">
+                      <span>Phone Number</span>
+                      <input
+                        id="phone"
+                        value={eligibilityForm.phone}
+                        onChange={(event) => handleEligibilityChange('phone', event.target.value)}
+                        type="tel"
+                        autoComplete="tel"
+                      />
+                    </label>
+
+                    <label htmlFor="eligibilityLoanType">
+                      <span>Loan Type</span>
+                      <select
+                        id="eligibilityLoanType"
+                        value={loanType}
+                        onChange={(event) => setLoanType(event.target.value)}
+                      >
+                        <option>Personal Loan</option>
+                        <option>Mortgage Loan</option>
+                        <option>Vehicle Loan</option>
+                        <option>Business Loan</option>
+                      </select>
+                    </label>
+
+                    <label htmlFor="loanAmountRequested">
+                      <span>Loan Amount Requested</span>
+                      <input
+                        id="loanAmountRequested"
+                        value={loanAmountText}
+                        onChange={(event) => setLoanAmountText(event.target.value)}
+                        type="text"
+                        inputMode="decimal"
+                      />
+                    </label>
+                  </div>
                 ) : (
                   <>
-                    Continue
-                    <Icon name="arrow" size={18} />
+                    <label htmlFor="starterLoanType">
+                      <span>I want to apply for</span>
+                      <select
+                        id="starterLoanType"
+                        value={loanType}
+                        onChange={(event) => setLoanType(event.target.value)}
+                      >
+                        <option>Personal Loan</option>
+                        <option>Mortgage Loan</option>
+                        <option>Vehicle Loan</option>
+                        <option>Business Loan</option>
+                      </select>
+                    </label>
+
+                    <label htmlFor="starterMonthlyIncome">
+                      <span>My estimated monthly income</span>
+                      <select
+                        id="starterMonthlyIncome"
+                        value={monthlyIncome}
+                        onChange={(event) => setMonthlyIncome(event.target.value)}
+                      >
+                        <option>BZD 2,000</option>
+                        <option>BZD 3,500</option>
+                        <option>BZD 5,000</option>
+                        <option>BZD 8,000+</option>
+                      </select>
+                    </label>
+
+                    <label htmlFor="starterLoanAmount">
+                      <span>How much would you like to borrow?</span>
+                      <input id="starterLoanAmount" value={formattedLoanAmount} type="text" readOnly />
+                    </label>
+
+                    <input
+                      className="range"
+                      type="range"
+                      min="1000"
+                      max="100000"
+                      step="500"
+                      value={loanAmount}
+                      onChange={(event) => updateLoanAmount(event.target.value)}
+                      aria-label="Loan amount"
+                    />
+                    <div className="range-labels">
+                      <span>BZD 1,000</span>
+                      <span>BZD 100,000</span>
+                    </div>
                   </>
                 )}
-              </button>
-              <p className="safe-note">
-                <Icon name="lock" size={14} />
-                Your information is safe and secure
-              </p>
+
+                <button className="primary-button full" type="submit">
+                  {isEligibilityStep ? (
+                    <>
+                      Continue
+                      <Icon name="arrow" size={18} />
+                    </>
+                  ) : (
+                    <>
+                      <Icon name="lock" size={18} />
+                      Check Eligibility
+                    </>
+                  )}
+                </button>
+                <p className="safe-note">
+                  <Icon name="lock" size={14} />
+                  Your information is safe and secure
+                </p>
+              </FadeContent>
             </form>
           </div>
         </section>

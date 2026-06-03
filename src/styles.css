@@ -313,6 +313,12 @@ a {
   font-size: clamp(2.45rem, 4.6vw, 4.15rem);
   line-height: 1.1;
   letter-spacing: 0;
+  transition: transform 260ms ease, text-shadow 260ms ease;
+}
+
+.hero h1:hover {
+  transform: translateY(-3px);
+  text-shadow: 0 12px 28px rgba(8, 25, 71, 0.16);
 }
 
 .hero-copy > p {
@@ -383,6 +389,10 @@ a {
 
 .eligibility-card {
   width: min(100%, 620px);
+}
+
+.loan-card-fade {
+  min-height: 100%;
 }
 
 .loan-heading {
@@ -630,11 +640,22 @@ a {
 
 .app-panel {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 105px;
+  grid-template-columns: minmax(0, 1fr) 150px;
   align-items: center;
   gap: 20px;
   padding-left: 26px;
   border-left: 1px solid #d4deec;
+}
+
+.app-panel h2 {
+  display: inline-block;
+  transition: color 240ms ease, transform 240ms ease, text-shadow 240ms ease;
+}
+
+.app-panel:hover h2 {
+  color: var(--blue);
+  transform: translateY(-2px);
+  text-shadow: 0 10px 22px rgba(21, 63, 159, 0.16);
 }
 
 .store-buttons {
@@ -647,21 +668,23 @@ a {
 .store-buttons a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 40px;
+  width: 120px;
   border-radius: 6px;
+  background: #05070d;
 }
 
 .store-buttons img {
   display: block;
-  width: auto;
+  width: 120px;
   height: 40px;
-  max-width: 140px;
   object-fit: contain;
 }
 
 .phone-preview {
   overflow: hidden;
-  width: 112px;
+  width: 150px;
   aspect-ratio: 9 / 19.5;
   padding: 0;
   border: 3px solid #18213a;
@@ -751,7 +774,7 @@ a {
   }
 
   .app-panel {
-    grid-template-columns: minmax(0, 1fr) 110px;
+    grid-template-columns: minmax(0, 1fr) 150px;
     padding-left: 0;
     border-left: 0;
   }
