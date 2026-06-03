@@ -1,14 +1,18 @@
 :root {
   color-scheme: light;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --navy: #081947;
-  --blue: #153f9f;
-  --blue-deep: #082f83;
-  --red: #cf2e2e;
-  --green: #2f8557;
-  --gold: #d9ac31;
-  --ink: #10162f;
-  --muted: #53617d;
+  --navy: #002b6c;
+  --navy-dark: #001f4f;
+  --blue: #0b4dbb;
+  --blue-deep: #083c93;
+  --red: #d71920;
+  --green: #16803c;
+  --gold: #d6a21d;
+  --ink: #061b45;
+  --muted: #52617a;
+  --text-dark: #061b45;
+  --text-muted: #52617a;
+  --light-bg: #f4f8ff;
   --line: #d9e1ee;
   --surface: #ffffff;
   --soft: #f2f6fc;
@@ -238,6 +242,9 @@ a {
 .secondary-button:focus-visible,
 .store-buttons a:focus-visible,
 .product-card:focus-visible,
+.service-card:focus-visible,
+.benefit-card:focus-visible,
+.app-promo:focus-visible,
 .quick-bar a:focus-visible,
 .nav-links a:focus-visible,
 .logo:focus-visible {
@@ -624,6 +631,254 @@ a {
   margin: 10px 0 0;
 }
 
+.service-section {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  width: min(1220px, calc(100% - 48px));
+  margin: -24px auto 0;
+  padding: 0 0 10px;
+}
+
+.service-card,
+.benefit-card,
+.app-promo {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(190, 205, 230, 0.74);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(246, 250, 255, 0.9)),
+    rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 36px rgba(6, 27, 69, 0.11);
+  backdrop-filter: blur(16px);
+}
+
+.service-card::before,
+.benefit-card::before,
+.app-promo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.72) 44%, transparent 62%);
+  opacity: 0;
+  transform: translateX(-115%);
+  transition: transform 650ms ease, opacity 300ms ease;
+  pointer-events: none;
+}
+
+.service-card:hover::before,
+.benefit-card:hover::before,
+.app-promo:hover::before {
+  opacity: 1;
+  transform: translateX(115%);
+}
+
+.service-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  min-height: 134px;
+  padding: 24px 22px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 4px;
+  background: currentColor;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 56px rgba(6, 27, 69, 0.18);
+}
+
+.service-card.blue {
+  color: var(--blue);
+}
+
+.service-card.green {
+  color: var(--green);
+}
+
+.service-card.red {
+  color: var(--red);
+}
+
+.service-card.gold {
+  color: var(--gold);
+}
+
+.service-icon,
+.benefit-icon,
+.quick-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.service-icon {
+  width: 72px;
+  height: 72px;
+  color: currentColor;
+  background: color-mix(in srgb, currentColor 12%, #ffffff);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.07);
+  box-shadow: 0 14px 26px color-mix(in srgb, currentColor 20%, transparent);
+}
+
+.service-copy strong,
+.service-copy small {
+  display: block;
+}
+
+.service-copy strong {
+  color: var(--navy-dark);
+  font-size: 1.2rem;
+  line-height: 1.15;
+}
+
+.service-copy small {
+  margin-top: 9px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.service-arrow {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: currentColor;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(185, 199, 223, 0.72);
+  box-shadow: 0 10px 20px rgba(6, 27, 69, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover .service-arrow {
+  transform: translateX(6px);
+  box-shadow: 0 14px 24px rgba(6, 27, 69, 0.16);
+}
+
+.why-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.85fr);
+  gap: 34px;
+  width: min(1220px, calc(100% - 48px));
+  margin: 26px auto 0;
+  padding: 30px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(11, 77, 187, 0.12), transparent 34%),
+    linear-gradient(135deg, #ffffff 0%, var(--light-bg) 58%, #eaf2ff 100%);
+  border: 1px solid rgba(196, 210, 232, 0.76);
+  box-shadow: 0 22px 58px rgba(6, 27, 69, 0.1);
+}
+
+.section-heading h2,
+.app-promo h2 {
+  margin: 0;
+  color: var(--navy-dark);
+  letter-spacing: 0;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.45rem, 2vw, 1.9rem);
+}
+
+.section-heading span {
+  display: block;
+  width: 44px;
+  height: 4px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: var(--blue);
+}
+
+.benefit-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.benefit-card {
+  min-height: 210px;
+  padding: 28px 18px 24px;
+  border-radius: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 46px rgba(6, 27, 69, 0.16);
+}
+
+.benefit-icon {
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 20px;
+  color: var(--blue);
+  background: linear-gradient(145deg, #eef5ff, #ddeaff);
+}
+
+.benefit-card strong {
+  display: block;
+  color: var(--navy-dark);
+  font-size: 1.03rem;
+}
+
+.benefit-card p {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.app-promo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 176px;
+  align-items: center;
+  gap: 22px;
+  min-height: 260px;
+  padding: 28px 24px 24px 28px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 82% 76%, rgba(255, 255, 255, 0.9), transparent 26%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(230, 240, 255, 0.88));
+}
+
+.app-promo h2 {
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  line-height: 1.18;
+  transition: color 240ms ease, transform 240ms ease, text-shadow 240ms ease;
+}
+
+.app-promo:hover h2 {
+  color: var(--blue);
+  transform: translateY(-2px);
+  text-shadow: 0 10px 22px rgba(11, 77, 187, 0.16);
+}
+
+.app-promo p {
+  margin: 14px 0 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
 .product-grid {
   position: relative;
   z-index: 2;
@@ -790,13 +1045,21 @@ a {
 
 .phone-preview {
   overflow: hidden;
-  width: 150px;
+  justify-self: center;
+  width: 176px;
   aspect-ratio: 9 / 19.5;
   padding: 0;
-  border: 3px solid #18213a;
-  border-radius: 16px;
+  border: 5px solid #101a38;
+  border-radius: 28px;
   background: #fff;
-  box-shadow: 0 10px 26px rgba(8, 25, 71, 0.2);
+  box-shadow: 0 26px 42px rgba(6, 27, 69, 0.28);
+  transform: rotate(5deg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-promo:hover .phone-preview {
+  transform: rotate(2deg) translateY(-4px);
+  box-shadow: 0 30px 52px rgba(6, 27, 69, 0.34);
 }
 
 .phone-preview img {
@@ -811,25 +1074,36 @@ a {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
-  padding: 0 max(24px, calc((100vw - 1140px) / 2));
+  width: min(1240px, calc(100% - 28px));
+  margin: 14px auto 0;
+  padding: 14px 18px;
+  border-radius: 18px 18px 0 0;
   color: #fff;
-  background: var(--blue-deep);
+  background:
+    radial-gradient(circle at 8% 20%, rgba(255, 255, 255, 0.12), transparent 22%),
+    linear-gradient(135deg, var(--navy-dark), #073a9a 54%, var(--navy-dark));
+  box-shadow: 0 -8px 30px rgba(6, 27, 69, 0.14);
 }
 
 .quick-bar a {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
-  min-height: 72px;
-  padding: 10px 28px;
+  gap: 18px;
+  min-height: 84px;
+  padding: 14px 24px;
+  border-radius: 14px;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .quick-bar a:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.16);
+  transform: translateY(-3px);
 }
 
 .quick-bar a:not(:last-child) {
-  border-right: 1px solid rgba(255, 255, 255, 0.24);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .quick-bar strong,
@@ -845,6 +1119,26 @@ a {
   margin-top: 2px;
   color: rgba(255, 255, 255, 0.82);
   font-size: 0.8rem;
+}
+
+.quick-icon {
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.quick-arrow {
+  display: inline-grid;
+  place-items: center;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.88);
+  transition: transform 0.3s ease;
+}
+
+.quick-bar a:hover .quick-arrow {
+  transform: translateX(6px);
 }
 
 @media (max-width: 1120px) {
@@ -874,9 +1168,22 @@ a {
   }
 
   .product-grid,
+  .service-section,
   .reason-grid,
   .quick-bar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .why-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-promo {
+    grid-template-columns: minmax(0, 1fr) 176px;
   }
 
   .app-panel {
@@ -933,9 +1240,49 @@ a {
 
   .benefit-row,
   .product-grid,
+  .service-section,
   .reason-grid,
   .quick-bar {
     grid-template-columns: 1fr;
+  }
+
+  .service-section {
+    width: min(100% - 32px, 560px);
+    margin-top: 10px;
+  }
+
+  .service-card {
+    min-height: 118px;
+    padding: 20px;
+  }
+
+  .service-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .why-panel {
+    width: min(100% - 32px, 560px);
+    padding: 22px;
+  }
+
+  .benefit-card-grid,
+  .app-promo {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit-card {
+    min-height: auto;
+  }
+
+  .app-promo {
+    justify-items: start;
+  }
+
+  .phone-preview {
+    width: 142px;
+    justify-self: start;
+    transform: rotate(0deg);
   }
 
   .benefit-row {
@@ -991,13 +1338,9 @@ a {
     justify-self: start;
   }
 
-  .quick-bar {
-    padding: 0 16px;
-  }
-
   .quick-bar a {
-    min-height: 64px;
-    padding-inline: 0;
+    min-height: 76px;
+    padding: 14px 6px;
     border-right: 0;
   }
 

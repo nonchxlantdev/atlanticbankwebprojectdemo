@@ -15,7 +15,7 @@ const benefits = [
 ];
 
 const products = [
-  { icon: 'users', title: 'Personal Banking', copy: 'Accounts, savings, loans and more.', tone: 'blue' },
+  { icon: 'user', title: 'Personal Banking', copy: 'Accounts, savings, loans and more.', tone: 'blue' },
   { icon: 'briefcase', title: 'Business Banking', copy: 'Solutions to help your business grow.', tone: 'green' },
   { icon: 'home', title: 'Loans', copy: 'Personal, mortgage, vehicle and business loans.', tone: 'red' },
   { icon: 'card', title: 'Cards', copy: 'Credit cards that fit your lifestyle.', tone: 'gold' }
@@ -154,6 +154,98 @@ function Logo() {
         <small>Building the future together</small>
       </span>
     </a>
+  );
+}
+
+function ServiceCards() {
+  return (
+    <section className="service-section" aria-label="Banking services">
+      {products.map(({ icon, title, copy, tone }) => (
+        <a className={`service-card ${tone}`} href="#" key={title}>
+          <span className="service-icon">
+            <Icon name={icon} size={40} />
+          </span>
+          <span className="service-copy">
+            <strong>{title}</strong>
+            <small>{copy}</small>
+          </span>
+          <span className="service-arrow" aria-hidden="true">
+            <Icon name="arrow" size={24} />
+          </span>
+        </a>
+      ))}
+    </section>
+  );
+}
+
+function WhyBankPanel() {
+  return (
+    <section className="why-panel" aria-label="Why bank with Atlantic Bank">
+      <div className="why-benefits">
+        <div className="section-heading">
+          <h2>Why Bank with Atlantic Bank?</h2>
+          <span aria-hidden="true" />
+        </div>
+
+        <div className="benefit-card-grid">
+          {reasons.map(({ icon, title, copy }) => (
+            <article className="benefit-card" key={title}>
+              <span className="benefit-icon">
+                <Icon name={icon} size={34} />
+              </span>
+              <strong>{title}</strong>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <AppPromo />
+    </section>
+  );
+}
+
+function AppPromo() {
+  return (
+    <aside className="app-promo" aria-label="Atlantic Bank mobile app">
+      <div className="app-promo-copy">
+        <h2>Bank Anytime, Anywhere</h2>
+        <p>Download the Atlantic Bank Belize App.</p>
+        <div className="store-buttons" aria-label="App download links">
+          <a href="#" aria-label="Download Atlantic Bank on the App Store">
+            <img src={appStoreBadge} alt="Download on the App Store" />
+          </a>
+          <a href="#" aria-label="Get Atlantic Bank on Google Play">
+            <img src={googlePlayBadge} alt="Get it on Google Play" />
+          </a>
+        </div>
+      </div>
+
+      <div className="phone-preview" aria-label="Mobile app preview">
+        <img src={mobileLoginScreen} alt="Atlantic Bank mobile app login screen" />
+      </div>
+    </aside>
+  );
+}
+
+function QuickLinksBar() {
+  return (
+    <footer className="quick-bar" aria-label="Quick actions">
+      {quickLinks.map(({ icon, title, copy }) => (
+        <a href="#" key={title}>
+          <span className="quick-icon">
+            <Icon name={icon} size={31} />
+          </span>
+          <span>
+            <strong>{title}</strong>
+            <small>{copy}</small>
+          </span>
+          <span className="quick-arrow" aria-hidden="true">
+            <Icon name="arrow" size={26} />
+          </span>
+        </a>
+      ))}
+    </footer>
   );
 }
 
@@ -409,7 +501,7 @@ function App() {
                         onChange={(event) => handleEligibilityChange('phone', formatPhoneNumber(event.target.value))}
                         type="tel"
                         autoComplete="tel"
-                        placeholder="(501) 638-7406"
+                        placeholder="(501) 600-XXXX"
                       />
                     </label>
 
@@ -514,69 +606,11 @@ function App() {
           </div>
         </section>
 
-        <section className="product-grid" aria-label="Banking categories">
-          {products.map(({ icon, title, copy, tone }) => (
-            <a className={`product-card ${tone}`} href="#" key={title}>
-              <Icon name={icon} size={42} />
-              <span>
-                <strong>{title}</strong>
-                <small>{copy}</small>
-              </span>
-              <span className="product-arrow" aria-hidden="true">&gt;</span>
-            </a>
-          ))}
-        </section>
-
-        <section className="trust-band" aria-label="Why bank with Atlantic Bank">
-          <div className="trust-inner">
-            <div className="reasons">
-              <h2>Why Bank with Atlantic Bank?</h2>
-              <div className="reason-grid">
-                {reasons.map(({ icon, title, copy }) => (
-                  <article className="reason" key={title}>
-                    <Icon name={icon} size={35} />
-                    <div>
-                      <strong>{title}</strong>
-                      <p>{copy}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div className="app-panel">
-              <div>
-                <h2>Bank Anytime, Anywhere</h2>
-                <p>Download the Atlantic Bank Belize App.</p>
-                <div className="store-buttons" aria-label="App download links">
-                  <a href="#" aria-label="Download Atlantic Bank on the App Store">
-                    <img src={appStoreBadge} alt="Download on the App Store" />
-                  </a>
-                  <a href="#" aria-label="Get Atlantic Bank on Google Play">
-                    <img src={googlePlayBadge} alt="Get it on Google Play" />
-                  </a>
-                </div>
-              </div>
-
-              <div className="phone-preview" aria-label="Mobile app preview">
-                <img src={mobileLoginScreen} alt="Atlantic Bank mobile app login screen" />
-              </div>
-            </div>
-          </div>
-        </section>
+        <ServiceCards />
+        <WhyBankPanel />
       </main>
 
-      <footer className="quick-bar" aria-label="Quick actions">
-        {quickLinks.map(({ icon, title, copy }) => (
-          <a href="#" key={title}>
-            <Icon name={icon} size={30} />
-            <span>
-              <strong>{title}</strong>
-              <small>{copy}</small>
-            </span>
-          </a>
-        ))}
-      </footer>
+      <QuickLinksBar />
     </div>
   );
 }
