@@ -261,6 +261,7 @@ function App() {
   const [monthlyIncome, setMonthlyIncome] = useState('BZD 2,000');
   const [loanAmount, setLoanAmount] = useState(10000);
   const [loanAmountText, setLoanAmountText] = useState('BZD 10,000');
+  const [customerType, setCustomerType] = useState('new');
   const [eligibilityForm, setEligibilityForm] = useState({
     fullName: '',
     employmentLength: '3 - 5 years',
@@ -273,6 +274,7 @@ function App() {
   );
   const isEligibilityStep = currentStep === 'eligibility';
   const isLoadingStep = currentStep === 'loading';
+  const isCustomerTypeStep = currentStep === 'customer-type';
 
   useEffect(() => {
     if (!isLoadingStep) return undefined;
@@ -322,6 +324,32 @@ function App() {
     event.preventDefault();
     if (currentStep === 'start') {
       setCurrentStep('loading');
+    } else if (currentStep === 'eligibility') {
+      setCurrentStep('customer-type');
+      requestAnimationFrame(() => {
+        document.getElementById('customer-type-card-title')?.focus();
+      });
+    }
+  }
+
+  function handleBack() {
+    if (currentStep === 'customer-type') {
+      setCurrentStep('eligibility');
+      requestAnimationFrame(() => {
+        document.getElementById('eligibility-card-title')?.focus();
+      });
+    } else if (currentStep === 'eligibility') {
+      setCurrentStep('start');
+    }
+  }
+
+  function handleCustomerTypeSelect(type) {
+    setCustomerType(type);
+
+    if (type === 'new') {
+      window.location.reload();
+    } else {
+      window.location.href = 'https://aolweb.atlabank.com/ocbretail/';
     }
   }
 
@@ -396,33 +424,56 @@ function App() {
 
             <form
               className="loan-card"
-              aria-label={isEligibilityStep ? 'Detailed eligibility form' : 'Loan application starter form'}
+              aria-label={
+                isEligibilityStep
+                  ? 'Detailed eligibility form'
+                  : isCustomerTypeStep
+                    ? 'Customer type selection'
+                    : 'Loan application starter form'
+              }
               onSubmit={handleFormSubmit}
             >
               <FadeContent key={currentStep} blur duration={650} threshold={0} className="loan-card-fade">
                 <div className="loan-heading">
-                  <div>
-                    <h2
-                      id={isEligibilityStep ? 'eligibility-card-title' : undefined}
-                      tabIndex={isEligibilityStep ? -1 : undefined}
-                    >
-                      {isEligibilityStep
-                        ? 'Check Your Eligibility'
-                        : isLoadingStep
-                          ? 'Checking Your Details'
-                          : 'Apply for a Loan Online'}
-                    </h2>
-                    <p>
-                      {isEligibilityStep
-                        ? 'Complete the short form below to see if you may qualify.'
-                        : isLoadingStep
-                          ? 'Preparing your secure eligibility form.'
-                          : 'Quick. Easy. Secure.'}
-                    </p>
+                  <div className="loan-title-row">
+                    {(isEligibilityStep || isCustomerTypeStep) && (
+                      <button className="portal-back-button" type="button" onClick={handleBack} aria-label="Go back">
+                        <Icon name="arrow" size={20} />
+                      </button>
+                    )}
+                    <div>
+                      <h2
+                        id={
+                          isEligibilityStep
+                            ? 'eligibility-card-title'
+                            : isCustomerTypeStep
+                              ? 'customer-type-card-title'
+                              : undefined
+                        }
+                        tabIndex={isEligibilityStep || isCustomerTypeStep ? -1 : undefined}
+                      >
+                        {isEligibilityStep
+                          ? 'Check Your Eligibility'
+                          : isCustomerTypeStep
+                            ? 'Start Your Secure Application'
+                            : isLoadingStep
+                            ? 'Checking Your Details'
+                            : 'Apply for a Loan Online'}
+                      </h2>
+                      <p>
+                        {isEligibilityStep
+                          ? 'Complete the short form below to see if you may qualify.'
+                          : isCustomerTypeStep
+                            ? 'To get started, tell us if you are a new or existing customer.'
+                            : isLoadingStep
+                            ? 'Preparing your secure eligibility form.'
+                            : 'Quick. Easy. Secure.'}
+                      </p>
+                    </div>
                   </div>
-                  <span className={isEligibilityStep || isLoadingStep ? 'secure-badge encrypted-badge' : 'secure-badge'}>
+                  <span className={isEligibilityStep || isLoadingStep || isCustomerTypeStep ? 'secure-badge encrypted-badge' : 'secure-badge'}>
                     <Icon name="shield" size={22} />
-                    {isEligibilityStep || isLoadingStep ? 'Secure & Encrypted' : 'Secure Application'}
+                    {isEligibilityStep || isLoadingStep || isCustomerTypeStep ? 'Secure & Encrypted' : 'Secure Application'}
                   </span>
                 </div>
 
@@ -443,6 +494,42 @@ function App() {
                     >
                       <span style={{ width: `${progress}%` }} />
                     </div>
+                  </div>
+                ) : isCustomerTypeStep ? (
+                  <div className="customer-type-panel" role="radiogroup" aria-label="Customer type">
+                    <button
+                      className={`customer-type-card ${customerType === 'new' ? 'selected' : ''}`}
+                      type="button"
+                      role="radio"
+                      aria-checked={customerType === 'new'}
+                      onClick={() => handleCustomerTypeSelect('new')}
+                    >
+                      <span className="customer-type-icon new-customer-icon">
+                        <Icon name="users" size={28} />
+                      </span>
+                      <span className="customer-type-copy">
+                        <strong>New Customer</strong>
+                        <small>First-time applicant? Let's get you started.</small>
+                      </span>
+                      <Icon name="arrow" size={20} />
+                    </button>
+
+                    <button
+                      className={`customer-type-card ${customerType === 'existing' ? 'selected' : ''}`}
+                      type="button"
+                      role="radio"
+                      aria-checked={customerType === 'existing'}
+                      onClick={() => handleCustomerTypeSelect('existing')}
+                    >
+                      <span className="customer-type-icon existing-customer-icon">
+                        <Icon name="user" size={28} />
+                      </span>
+                      <span className="customer-type-copy">
+                        <strong>Existing Customer</strong>
+                        <small>Already bank with Atlantic Bank.</small>
+                      </span>
+                      <Icon name="arrow" size={20} />
+                    </button>
                   </div>
                 ) : isEligibilityStep ? (
                   <div className="eligibility-grid">
@@ -587,21 +674,23 @@ function App() {
                   </>
                 )}
 
-                <button className="primary-button full" type="submit" disabled={isLoadingStep}>
-                  {isEligibilityStep ? (
-                    <>
-                      Continue
-                      <Icon name="arrow" size={18} />
-                    </>
-                  ) : isLoadingStep ? (
-                    'Loading...'
-                  ) : (
-                    <>
-                      <Icon name="lock" size={18} />
-                      Check Eligibility
-                    </>
-                  )}
-                </button>
+                {!isCustomerTypeStep && (
+                  <button className="primary-button full" type="submit" disabled={isLoadingStep}>
+                    {isEligibilityStep ? (
+                      <>
+                        Continue
+                        <Icon name="arrow" size={18} />
+                      </>
+                    ) : isLoadingStep ? (
+                      'Loading...'
+                    ) : (
+                      <>
+                        <Icon name="lock" size={18} />
+                        Check Eligibility
+                      </>
+                    )}
+                  </button>
+                )}
                 <p className="safe-note">
                   <Icon name="lock" size={14} />
                   Your information is safe and secure
