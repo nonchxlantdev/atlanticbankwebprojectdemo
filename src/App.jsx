@@ -165,10 +165,10 @@ function App() {
   const [loanAmount, setLoanAmount] = useState(10000);
   const [loanAmountText, setLoanAmountText] = useState('BZD 10,000');
   const [eligibilityForm, setEligibilityForm] = useState({
-    fullName: 'John Doe',
+    fullName: '',
     employmentLength: '3 - 5 years',
-    email: 'john.doe@email.com',
-    phone: '501-123-4567'
+    email: '',
+    phone: ''
   });
   const formattedLoanAmount = useMemo(
     () => `BZD ${loanAmount.toLocaleString('en-US')}`,
@@ -208,6 +208,17 @@ function App() {
       ...current,
       [field]: value
     }));
+  }
+
+  function formatPhoneNumber(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 10);
+    const area = digits.slice(0, 3);
+    const prefix = digits.slice(3, 6);
+    const line = digits.slice(6, 10);
+
+    if (digits.length <= 3) return area ? `(${area}` : '';
+    if (digits.length <= 6) return `(${area}) ${prefix}`;
+    return `(${area}) ${prefix}-${line}`;
   }
 
   function handleFormSubmit(event) {
@@ -346,6 +357,7 @@ function App() {
                         onChange={(event) => handleEligibilityChange('fullName', event.target.value)}
                         type="text"
                         autoComplete="name"
+                        placeholder="John Doe"
                       />
                     </label>
 
@@ -385,6 +397,7 @@ function App() {
                         onChange={(event) => handleEligibilityChange('email', event.target.value)}
                         type="email"
                         autoComplete="email"
+                        placeholder="john.doe@email.com"
                       />
                     </label>
 
@@ -393,9 +406,10 @@ function App() {
                       <input
                         id="phone"
                         value={eligibilityForm.phone}
-                        onChange={(event) => handleEligibilityChange('phone', event.target.value)}
+                        onChange={(event) => handleEligibilityChange('phone', formatPhoneNumber(event.target.value))}
                         type="tel"
                         autoComplete="tel"
+                        placeholder="(501) 638-7406"
                       />
                     </label>
 
