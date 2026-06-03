@@ -61,6 +61,15 @@ a {
   text-decoration: none;
 }
 
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid #f2bf3d;
+  outline-offset: 3px;
+}
+
 .site-shell {
   min-height: 100vh;
   background: #fff;
@@ -142,6 +151,10 @@ a {
   white-space: nowrap;
 }
 
+.nav-links a:hover {
+  color: var(--blue);
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -176,6 +189,20 @@ a {
 .icon-button:hover,
 .login-button:hover {
   background: #eef3fb;
+}
+
+.icon-button:focus-visible,
+.login-button:focus-visible,
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.store-buttons button:focus-visible,
+.phone-preview button:focus-visible,
+.product-card:focus-visible,
+.quick-bar a:focus-visible,
+.nav-links a:focus-visible,
+.logo:focus-visible {
+  outline: 3px solid #f2bf3d;
+  outline-offset: 3px;
 }
 
 .login-button {
@@ -221,6 +248,11 @@ a {
   box-shadow: 0 10px 24px rgba(8, 25, 71, 0.12);
 }
 
+.secondary-button:hover {
+  border-color: #aebfdb;
+  background: #f8fbff;
+}
+
 .menu-button {
   display: none;
 }
@@ -231,6 +263,10 @@ a {
   background:
     linear-gradient(90deg, rgba(243, 249, 255, 0.96) 0%, rgba(243, 249, 255, 0.86) 36%, rgba(243, 249, 255, 0.22) 68%),
     var(--hero-image) center / cover no-repeat;
+}
+
+.hero-eligibility {
+  min-height: 575px;
 }
 
 .hero::after {
@@ -256,6 +292,20 @@ a {
 .hero-copy {
   max-width: 610px;
   padding-top: 16px;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  margin-bottom: 18px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: var(--blue-deep);
+  background: rgba(255, 255, 255, 0.76);
+  font-size: 0.88rem;
+  font-weight: 850;
 }
 
 .hero h1 {
@@ -332,6 +382,10 @@ a {
   box-shadow: var(--shadow);
 }
 
+.eligibility-card {
+  width: min(100%, 620px);
+}
+
 .loan-heading {
   display: flex;
   justify-content: space-between;
@@ -368,6 +422,16 @@ a {
   line-height: 1.2;
 }
 
+.encrypted-badge {
+  max-width: none;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 6px;
+  color: #156c39;
+  background: #e8f5ed;
+  white-space: nowrap;
+}
+
 .loan-card label {
   display: block;
   margin-top: 13px;
@@ -382,7 +446,9 @@ a {
 }
 
 .loan-card select,
-.loan-card input[type="text"] {
+.loan-card input[type="text"],
+.loan-card input[type="email"],
+.loan-card input[type="tel"] {
   width: 100%;
   min-height: 43px;
   border: 1px solid #cfd8e6;
@@ -390,6 +456,31 @@ a {
   padding: 0 12px;
   color: #1c2741;
   background: #fff;
+}
+
+.loan-card select:hover,
+.loan-card input:hover {
+  border-color: #99add0;
+}
+
+.loan-card select:focus-visible,
+.loan-card input:focus-visible,
+.range:focus-visible {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(21, 63, 159, 0.16);
+  outline: 3px solid #f2bf3d;
+  outline-offset: 2px;
+}
+
+.eligibility-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 18px;
+  row-gap: 2px;
+}
+
+.eligibility-wide {
+  grid-column: 1 / -1;
 }
 
 .range {
@@ -439,6 +530,11 @@ a {
   background: #fff;
   border: 1px solid #e0e6f0;
   box-shadow: 0 10px 28px rgba(8, 25, 71, 0.12);
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(8, 25, 71, 0.16);
 }
 
 .product-card strong,
@@ -631,6 +727,10 @@ a {
   padding: 10px 28px;
 }
 
+.quick-bar a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .quick-bar a:not(:last-child) {
   border-right: 1px solid rgba(255, 255, 255, 0.24);
 }
@@ -666,6 +766,10 @@ a {
   .hero-content,
   .trust-inner {
     grid-template-columns: 1fr;
+  }
+
+  .eligibility-card {
+    width: 100%;
   }
 
   .hero-copy {
@@ -747,6 +851,10 @@ a {
 
   .loan-card {
     padding: 20px;
+  }
+
+  .eligibility-grid {
+    grid-template-columns: 1fr;
   }
 
   .loan-heading {
