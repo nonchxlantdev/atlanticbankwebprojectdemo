@@ -195,8 +195,7 @@ a {
 .login-button:focus-visible,
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
-.store-buttons button:focus-visible,
-.phone-preview button:focus-visible,
+.store-buttons a:focus-visible,
 .product-card:focus-visible,
 .quick-bar a:focus-visible,
 .nav-links a:focus-visible,
@@ -645,69 +644,38 @@ a {
   margin-top: 16px;
 }
 
-.store-buttons button {
+.store-buttons a {
+  display: inline-flex;
+  align-items: center;
   min-height: 40px;
-  border: 0;
-  border-radius: 5px;
-  padding: 0 14px;
-  color: #fff;
-  background: #05070d;
-  font-weight: 800;
-  cursor: pointer;
+  border-radius: 6px;
+}
+
+.store-buttons img {
+  display: block;
+  width: auto;
+  height: 40px;
+  max-width: 140px;
+  object-fit: contain;
 }
 
 .phone-preview {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  width: 105px;
-  min-height: 162px;
-  padding: 14px 10px 10px;
+  overflow: hidden;
+  width: 112px;
+  aspect-ratio: 9 / 19.5;
+  padding: 0;
   border: 3px solid #18213a;
   border-radius: 16px;
   background: #fff;
   box-shadow: 0 10px 26px rgba(8, 25, 71, 0.2);
 }
 
-.phone-brand {
-  color: var(--navy);
-  font-size: 0.56rem;
-  font-weight: 900;
-}
-
-.greeting {
-  color: #40506f;
-  font-size: 0.54rem;
-  line-height: 1.3;
-}
-
-.phone-preview button {
-  min-height: 22px;
-  border: 0;
-  border-radius: 4px;
-  color: #fff;
-  background: var(--red);
-  font-size: 0.56rem;
-  font-weight: 800;
-}
-
-.phone-tabs {
-  display: flex;
-  justify-content: space-around;
-  color: var(--blue);
-  border-top: 1px solid #e1e7f2;
-  border-bottom: 1px solid #e1e7f2;
-  padding: 5px 0;
-}
-
-.phone-preview strong {
-  color: #2d3955;
-  font-size: 0.56rem;
-}
-
-.phone-preview b {
-  color: var(--navy);
-  font-size: 0.72rem;
+.phone-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
 }
 
 .quick-bar {

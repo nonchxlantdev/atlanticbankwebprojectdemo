@@ -1,6 +1,9 @@
 import React from 'react';
 import { useMemo, useState } from 'react';
+import appStoreBadge from './assets/appstore.png';
 import heroImage from './assets/belize-coast-hero.png';
+import googlePlayBadge from './assets/googleplay.png';
+import mobileLoginScreen from './assets/mobileloginscreen.jpeg';
 
 const navItems = ['Personal', 'Business', 'Loans', 'Cards', 'About Us', 'Help & Support'];
 
@@ -521,22 +524,17 @@ function App() {
                 <h2>Bank Anytime, Anywhere</h2>
                 <p>Download the Atlantic Bank Belize App.</p>
                 <div className="store-buttons" aria-label="App download links">
-                  <button type="button">Download on the App Store</button>
-                  <button type="button">Get it on Google Play</button>
+                  <a href="#" aria-label="Download Atlantic Bank on the App Store">
+                    <img src={appStoreBadge} alt="Download on the App Store" />
+                  </a>
+                  <a href="#" aria-label="Get Atlantic Bank on Google Play">
+                    <img src={googlePlayBadge} alt="Get it on Google Play" />
+                  </a>
                 </div>
               </div>
 
               <div className="phone-preview" aria-label="Mobile app preview">
-                <span className="phone-brand">Atlantic Bank</span>
-                <span className="greeting">Good morning! Welcome back.</span>
-                <button type="button">Login</button>
-                <div className="phone-tabs">
-                  <Icon name="smartphone" size={15} />
-                  <Icon name="rates" size={15} />
-                  <Icon name="card" size={15} />
-                </div>
-                <strong>Quick Balance</strong>
-                <b>BZD 2,450.50</b>
+                <img src={mobileLoginScreen} alt="Atlantic Bank mobile app login screen" />
               </div>
             </div>
           </div>
